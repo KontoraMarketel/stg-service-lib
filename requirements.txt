@@ -1,0 +1,7 @@
+aiokafka~=0.12.0
+aioboto3~=15.0.0
+aiohttp~=3.12.14
+aiobotocore~=2.23.0
+types-aiobotocore-s3~=2.23.1
+clickhouse-connect~=0.8.7
+pandas~=2.3.2
