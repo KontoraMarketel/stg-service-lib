@@ -1,0 +1,44 @@
+name: Publish
+on: 
+    push:
+        branches:
+            - main
+
+jobs:
+  build:
+    name: python
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+            
+      - name: Build
+        run: uv build
+  publish-github:
+    name: Publish to GitHub Packages
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: python-package
+        path: dist/
+    
+    - name: Publish to GitHub Packages
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: https://upload.pkg.github.com/KontoraMarketel/stg-service-lib
+        password: ${{ secrets.GITHUB_TOKEN }}
