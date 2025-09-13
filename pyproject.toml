@@ -11,7 +11,7 @@ dependencies = [
     "aiokafka~=0.12.0",
     "clickhouse-connect~=0.8.7",
     "pandas~=2.3.2",
-    "types-aiobotocore-s3~=2.23.1",
+    "types-aiobotocore-s3",
 ]
 
 [build-system]
