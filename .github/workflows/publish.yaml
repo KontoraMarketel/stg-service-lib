@@ -27,6 +27,7 @@ jobs:
         with:
           name: python-package
           path: dist/
+
   publish-github:
     name: Publish to GitHub Packages
     needs: build
