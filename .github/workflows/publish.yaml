@@ -34,7 +34,7 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v4
       with:
-        name: python-package
+        name: stg_service_lib
         path: dist/
     
     - name: Publish to GitHub Packages
