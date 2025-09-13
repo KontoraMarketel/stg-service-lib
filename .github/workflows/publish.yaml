@@ -46,5 +46,5 @@ jobs:
     - name: Publish to GitHub Packages
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        repository-url: https://upload.pkg.github.com/KontoraMarketel/stg-service-lib
+        repository-url: https://upload.pkg.github.com/KontoraMarketel
         password: ${{ secrets.GITHUB_TOKEN }}
