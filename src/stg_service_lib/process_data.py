@@ -1,15 +1,25 @@
 import json
 import pandas as pd
+
+
 from uuid import UUID, uuid5, NAMESPACE_OID
 from datetime import datetime, timezone
 from clickhouse_connect.driver.asyncclient import AsyncClient
 
+from custom_types import DataCallback
 
-async def process_data(db_conn: AsyncClient, data: dict, task_id: str, ts: str) -> None:
+
+async def process_data(
+    db_conn: AsyncClient,
+    data: dict,
+    task_id: str,
+    ts: str,
+    on_data: DataCallback,
+) -> None:
     # task_id -> UUID
     try:
         task_uuid = UUID(str(task_id))
-    except Exception:
+    except ValueError:
         task_uuid = uuid5(NAMESPACE_OID, str(task_id))
 
     # ts -> datetime (UTC)
@@ -30,11 +40,10 @@ async def process_data(db_conn: AsyncClient, data: dict, task_id: str, ts: str) 
     if not items:
         return
 
-    # конвертируем список словарей в DataFrame
-    df = pd.DataFrame(items)
-    
     # Тут мы обрабатываем датафрейм и в конце пишем их в клик
+    df = await on_data(pd.DataFrame(items), task_uuid, ts_dt)
 
     # вставляем DataFrame в ClickHouse
-    await db_conn.insert_df("dwh_table", df,
-                            settings={"async_insert": 1, "wait_for_async_insert": 0})
+    await db_conn.insert_df(
+        "dwh_table", df, settings={"async_insert": 1, "wait_for_async_insert": 0}
+    )

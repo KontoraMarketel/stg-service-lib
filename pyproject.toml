@@ -1,0 +1,23 @@
+[project]
+name = "stg-service-lib"
+version = "0.1.0"
+requires-python = ">=3.13"
+readme = "README.md"
+dependencies = [
+    "aioboto3~=15.0.0",
+    "aiobotocore~=2.23.0",
+    "aiohttp~=3.12.14",
+    "aiokafka~=0.12.0",
+    "clickhouse-connect~=0.8.7",
+    "pandas~=2.3.2",
+    "types-aiobotocore-s3~=2.23.1",
+]
+
+[dependency-groups]
+dev = ["ruff>=0.13.0"]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]

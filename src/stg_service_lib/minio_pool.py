@@ -16,10 +16,10 @@ class MinioClientPool:
     async def start(self):
         for _ in range(self.size):
             client = await self.session.client(
-                service_name='s3',
+                service_name="s3",
                 endpoint_url=self.endpoint_url,
                 aws_access_key_id=self.access_key,
-                aws_secret_access_key=self.secret_key
+                aws_secret_access_key=self.secret_key,
             ).__aenter__()
             await self.pool.put(client)
 
