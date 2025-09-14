@@ -102,7 +102,7 @@ class DataProcessor:
         try:
             # Загрузка данных из MinIO
             data = await download_from_minio(
-                self._minio_pool, self.minio_config.bucket, minio_key
+                self._minio_pool, self.config.minio.bucket, minio_key
             )
             logger.info(
                 f"Downloaded data from MinIO: {data[:100]}..."
