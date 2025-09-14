@@ -66,19 +66,19 @@ class DataProcessor:
         )
 
         self._minio_pool = MinioClientPool(
-            endpoint_url=self.minio_config.endpoint,
-            access_key=self.minio_config.access_key,
-            secret_key=self.minio_config.secret_key,
+            endpoint_url=self.config.minio.endpoint,
+            access_key=self.config.minio.access_key,
+            secret_key=self.config.minio.secret_key,
             size=5,
         )
         await self._minio_pool.start()
 
         self._db_conn = await clickhouse_connect.get_async_client(
-            host=self.clickhouse_config.host,
-            port=self.clickhouse_config.port,
-            username=self.clickhouse_config.username,
-            password=self.clickhouse_config.password,
-            database=self.clickhouse_config.database,
+            host=self.config.clickhouse.host,
+            port=self.config.clickhouse.port,
+            username=self.config.clickhouse.username,
+            password=self.config.clickhouse.password,
+            database=self.config.clickhouse.database,
         )
 
         await self._consumer.start()
