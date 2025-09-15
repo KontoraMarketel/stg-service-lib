@@ -8,12 +8,12 @@ import clickhouse_connect
 
 from clickhouse_connect.driver.asyncclient import AsyncClient
 
-from configuration import Config
-from custom_types import DataCallback, KafkaMessage
-from exceptions import ConfigurationError
-from minio_pool import MinioClientPool
-from process_data import process_data
-from storage import download_from_minio
+from .configuration import Config
+from .custom_types import DataCallback, KafkaMessage
+from .exceptions import ConfigurationError
+from .minio_pool import MinioClientPool
+from .process_data import process_data
+from .storage import download_from_minio
 
 
 logger = logging.getLogger(__name__)
@@ -109,7 +109,13 @@ class DataProcessor:
             )  # Логируем первые 100 символов
 
             # Обработка данных
-            await process_data(self._db_conn, data, task_id, ts, self.data_callback)
+            await process_data(
+                db_conn=self._db_conn,
+                data=data,
+                dwh_table=self.config.clickhouse.table,
+                msg_payload=msg,
+                on_data=self.data_callback,
+            )
 
             logger.info(f"Task {task_id} completed successfully")
 

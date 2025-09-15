@@ -1,6 +1,6 @@
 [project]
 name = "stg-service-lib"
-version = "0.1.0"
+version = "0.1.1"
 requires-python = ">=3.13"
 readme = "README.md"
 description = "STG Service Library for data processing pipeline"
@@ -11,6 +11,7 @@ dependencies = [
     "aiokafka~=0.12.0",
     "clickhouse-connect~=0.8.7",
     "pandas~=2.3.2",
+    "requests>=2.32.5",
     "types-aiobotocore-s3",
 ]
 

@@ -26,6 +26,7 @@ class ClickHouseConfig:
     username: str
     password: str
     database: str
+    table: str
 
 
 @dataclass
