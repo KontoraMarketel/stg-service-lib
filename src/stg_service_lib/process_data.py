@@ -1,6 +1,4 @@
 import json
-import pandas as pd
-
 
 from uuid import UUID, uuid5, NAMESPACE_OID
 from datetime import datetime, timezone
@@ -43,7 +41,7 @@ async def process_data(
         return
 
     # Тут мы обрабатываем датафрейм и в конце пишем их в клик
-    df = await on_data(pd.DataFrame(items), task_uuid, ts_dt)
+    df = await on_data(items, task_uuid, ts_dt)
 
     # вставляем DataFrame в ClickHouse
     await db_conn.insert_df(

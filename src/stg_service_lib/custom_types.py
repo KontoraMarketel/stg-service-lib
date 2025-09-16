@@ -2,10 +2,11 @@ import pandas as pd
 
 from uuid import UUID
 from datetime import datetime
-from typing import Callable, TypedDict, Optional, Awaitable
+from typing import Callable, TypedDict, Optional, Awaitable, Union, List, Dict
 
-
-type DataCallback = Callable[[pd.DataFrame, UUID, datetime], Awaitable[pd.DataFrame]]
+type DataCallback = Callable[
+    [Union[List, Dict], UUID, datetime], Awaitable[pd.DataFrame]
+]
 
 
 class KafkaMessage(TypedDict):
