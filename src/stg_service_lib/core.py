@@ -104,9 +104,6 @@ class DataProcessor:
             data = await download_from_minio(
                 self._minio_pool, self.config.minio.bucket, minio_key
             )
-            logger.info(
-                f"Downloaded data from MinIO: {data[:100]}..."
-            )  # Логируем первые 100 символов
 
             # Обработка данных
             await process_data(
