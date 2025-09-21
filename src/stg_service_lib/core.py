@@ -104,9 +104,6 @@ class DataProcessor:
             data = await download_from_minio(
                 self._minio_pool, self.config.minio.bucket, minio_key
             )
-            logger.info(
-                f"Downloaded data from MinIO: {data[:100]}..."
-            )  # Логируем первые 100 символов
 
             # Обработка данных
             await process_data(
@@ -125,7 +122,7 @@ class DataProcessor:
             }
 
         except Exception as e:
-            logger.error(f"Error processing task {task_id}: {e}")
+            logger.exception(f"Error processing task {task_id}: {e}", stack_info=True)
             await self._handle_processing_error(task_id, e, msg)
             raise
 
@@ -134,7 +131,7 @@ class DataProcessor:
     ) -> None:
         """Обработка ошибок обработки"""
         # TODO: реализовать логику записи в dead letter queue или специальную таблицу
-        logger.error(f"Task {task_id} failed: {error}")
+        logger.error("Task %s failed. msg=%r", task_id, msg)
         # Можно добавить метрики, алертинг и т.д.
 
     async def run_consumer_loop(self) -> None:
