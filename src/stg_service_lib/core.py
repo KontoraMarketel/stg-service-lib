@@ -127,7 +127,7 @@ class DataProcessor:
         except Exception as e:
             logger.error(f"Error processing task {task_id}: {e}")
             await self._handle_processing_error(task_id, e, msg)
-            return None
+            raise
 
     async def _handle_processing_error(
         self, task_id: str, error: Exception, msg: Dict[str, Any]
